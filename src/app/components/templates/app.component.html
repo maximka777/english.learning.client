@@ -1,0 +1,5 @@
+<h1>Пользователи</h1>
+<div *ngFor="let user of users">
+  <h3>{{user.username}}</h3>
+  <p>{{user.isAdmin ? 'Администратор' : 'Пользователь'}}</p>
+</div>
