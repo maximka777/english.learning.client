@@ -1,1 +1,12 @@
-/* You can add global styles to this file, and also import other style files */
+.top-margin-20 {
+  margin-top: 20px;
+}
+
+tr:hover .hoverable-icon {
+  opacity: 1;
+}
+
+.hoverable-icon {
+  opacity: 0;
+  cursor: pointer;
+}

@@ -1,0 +1,17 @@
+<div class="container">
+  <div class="row">
+    <h1>Панель администратора</h1>
+    <hr>
+    <div class="col-md-2 left-side-menu">
+      <ul class="list-group">
+        <li class="list-group-item" (click)="changeActivePage(WORD_THEMES_PAGE)">Слова</li>
+        <li class="list-group-item" (click)="changeActivePage(TEST_THEMES_PAGE)">Тесты</li>
+      </ul>
+    </div>
+    <div class="col-md-10">
+      <admin-word-themes *ngIf="activePage === WORD_THEMES_PAGE"></admin-word-themes>
+      <admin-test-themes *ngIf="activePage === TEST_THEMES_PAGE"></admin-test-themes>
+    </div>
+  </div>
+</div>
+

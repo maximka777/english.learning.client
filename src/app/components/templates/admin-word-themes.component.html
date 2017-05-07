@@ -1,0 +1,21 @@
+<div class="row">
+  <div class="col-md-12">
+    <form class="form-inline">
+      <div class="form-group">
+        <input type="text" class="form-control input-sm" [(ngModel)]="currentTheme.name" name="name" placeholder="Введите название темы">
+      </div>
+      <button type="submit" class="btn btn-primary btn-sm" (click)="submitAddThemeForm()">Добавить</button>
+    </form>
+  </div>
+</div>
+<div class="row themes">
+  <div *ngIf="themes.length" class="col-md-12 themes">
+    <a *ngFor="let theme of themes" routerLink="/admin/word-theme/{{theme.id}}" class="theme">{{theme.name}}</a>
+  </div>
+  <div *ngIf="!themes.length" class="col-md-12 top-margin-20">
+    <div class="alert alert-success" role="alert">
+      <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+      Ни одной темы не обнаружено.
+    </div>
+  </div>
+</div>

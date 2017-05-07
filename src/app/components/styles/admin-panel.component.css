@@ -1,0 +1,8 @@
+.left-side-menu li {
+  transition: 0.2s background linear;
+  cursor: pointer;
+}
+
+.left-side-menu li:hover {
+  background-color: #eee;
+}
