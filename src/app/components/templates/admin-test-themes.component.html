@@ -27,7 +27,7 @@
       </thead>
       <tbody>
       <tr *ngFor="let theme of themes">
-        <td>{{theme.name}}</td>
+        <td><a routerLink="/admin/test-theme/{{theme.id}}">{{theme.name}}</a></td>
         <td>
           <div class="progress progress-striped">
             <div class="progress-bar progress-bar-success"

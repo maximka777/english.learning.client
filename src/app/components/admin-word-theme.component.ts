@@ -19,7 +19,7 @@ export class AdminWordThemeComponent {
   constructor(private wordsService: WordsService,
               private wordThemesService: WordThemesService,
               private activatedRoute: ActivatedRoute,
-              private  router: Router) {
+              private router: Router) {
     activatedRoute.params.subscribe((params: Params) => {
       this.themeId = params['themeId'];
       this.loadTheme();
@@ -46,9 +46,13 @@ export class AdminWordThemeComponent {
   submitAddWordForm() {
     this.wordsService.createOne(this.currentWord)
       .then(data => {
-        this.words.push(Object.assign({}, this.currentWord));
+        this.words.push(Object.assign({}, data));
         this.currentWord = new Word(this.themeId);
       });
+  }
+
+  back() {
+    this.router.navigate(['/admin/word-themes']);
   }
 
   removeWord(wordId) {
@@ -61,7 +65,7 @@ export class AdminWordThemeComponent {
   removeWordTheme() {
     this.wordThemesService.remove(this.themeId)
       .then(data => {
-        this.router.navigate(['/admin']);
+        this.router.navigate(['/admin/word-themes']);
       });
   }
 }

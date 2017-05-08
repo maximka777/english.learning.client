@@ -1,0 +1,19 @@
+.rightAnswer {
+  background: limegreen;
+}
+
+.theme-header {
+  margin-bottom: 20px;
+}
+
+.answer-form {
+  border: 1px solid #eee;
+  margin-left: 20px;
+  margin-bottom: 10px;
+  padding: 10px;
+}
+
+.question-header {
+  display: flex;
+  justify-content: space-between;
+}

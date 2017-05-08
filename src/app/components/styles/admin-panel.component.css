@@ -1,5 +1,5 @@
 .left-side-menu li {
-  transition: 0.2s background linear;
+  transition: 0.2s all linear;
   cursor: pointer;
 }
 

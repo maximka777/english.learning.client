@@ -1,4 +1,5 @@
 import {Component} from '@angular/core';
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'admin-panel',
@@ -11,7 +12,11 @@ export class AdminPanelComponent {
 
   activePage = this.WORD_THEMES_PAGE;
 
-  constructor() {}
+  constructor(private activatedRoute: ActivatedRoute) {
+    activatedRoute.params.subscribe(params => {
+      this.activePage = params['page'] === this.TEST_THEMES_PAGE ? this.TEST_THEMES_PAGE : this.WORD_THEMES_PAGE;
+    });
+  }
 
   changeActivePage(url) {
     this.activePage = url;

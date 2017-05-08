@@ -21,7 +21,7 @@ export class AdminWordThemesComponent {
   submitAddThemeForm() {
     this.wordThemesService.createOne(this.currentTheme)
       .then(data => {
-        this.themes.push(Object.assign({}, this.currentTheme));
+        this.themes.push(Object.assign({}, data));
         this.currentTheme = new WordTheme();
       });
   }

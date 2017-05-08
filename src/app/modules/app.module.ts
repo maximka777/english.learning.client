@@ -18,6 +18,10 @@ import {AdminWordThemeComponent} from "../components/admin-word-theme.component"
 import {WordsService} from "../services/words.service";
 import {AdminTestThemesComponent} from "../components/admin-test-themes.component";
 import {TestThemesService} from "../services/test-themes.service";
+import {TestsService} from "../services/tests.service";
+import {AdminTestThemeComponent} from "../components/admin-test-theme.component";
+import {AdminTestComponent} from "../components/admin-test.component";
+import {QuestionsService} from "../services/questions.service";
 
 @NgModule({
   declarations: [
@@ -27,6 +31,8 @@ import {TestThemesService} from "../services/test-themes.service";
     AdminWordThemesComponent,
     AdminWordThemeComponent,
     AdminTestThemesComponent,
+    AdminTestThemeComponent,
+    AdminTestComponent,
   ],
   imports: [
     BrowserModule,
@@ -43,6 +49,8 @@ import {TestThemesService} from "../services/test-themes.service";
     AuthService,
     WordsService,
     TestThemesService,
+    TestsService,
+    QuestionsService,
   ],
   bootstrap: [AppComponent]
 })

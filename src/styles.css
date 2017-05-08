@@ -10,3 +10,14 @@ tr:hover .hoverable-icon {
   opacity: 0;
   cursor: pointer;
 }
+
+.back-btn {
+  cursor: pointer;
+  font-size: 30px;
+  color: #f8f8f8;
+  transition: 0.3s all linear;
+}
+
+.back-btn:hover {
+  color: black;
+}

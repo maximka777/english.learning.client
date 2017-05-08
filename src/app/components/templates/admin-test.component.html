@@ -1,0 +1,63 @@
+<div class="container" *ngIf="test">
+  <div class="row">
+    <div class="col-md-1">
+      <i class="glyphicon glyphicon-arrow-left back-btn" (click)="back()"></i>
+    </div>
+    <div class="col-md-10 theme-header">
+      <h3>{{test.name}}</h3>
+      <button class="btn btn-danger btn-xs" (click)="removeTest()">Удалить</button>
+      <button class="btn btn-xs" (click)="toggleAddQuestionForm()"
+              [class.btn-success]="!isAddQuestionFormActive"
+              [class.btn-danger]="isAddQuestionFormActive">{{isAddQuestionFormActive ? "Отмена" : "Добавить вопрос"}}</button>
+    </div>
+  </div>
+  <div class="row">
+    <div *ngFor="let question of test.questions; let questionNumber = index" class="col-md-10 col-md-offset-1">
+      <div class="panel panel-default">
+        <div class="panel-heading question-header">
+          <h3 class="panel-title ">{{questionNumber + 1 + '.  ' + question.questionText}}</h3>
+          <button class="btn btn-danger btn-xs" (click)="removeQuestion(question)">Удалить</button>
+        </div>
+        <ul class="list-group">
+          <li *ngFor="let answer of question.answers; let answerNumber = index" class="list-group-item" [class.rightAnswer]="answer.isCorrect">{{answerNumber + 1 + '.  ' + answer.answerText}}</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="row" *ngIf="isAddQuestionFormActive">
+    <div class="col-md-12">
+      <form>
+        <div class="form-group">
+          <label>Вопрос</label>
+          <input type="text" class="form-control" placeholder="Текст вопроса" [(ngModel)]="currentQuestion.questionText" name="questionText">
+        </div>
+        <div class="form-group" style="margin-left: 20px">
+          <label>Варианты ответов</label>
+          <button type="submit" class="btn btn-success btn-xs" (click)="addAnswer()">Добавить вариант ответа</button>
+        </div>
+        <form class="answer-form" *ngFor="let answer of currentQuestion.answers; let i = index">
+          <div class="form-group">
+            <label>Текст ответа</label>
+            <input type="text" class="form-control" placeholder="Текст ответа" [(ngModel)]="answer.answerText" name="answerText">
+          </div>
+          <div class="form-group">
+            <label>Верный ответ?</label>
+            <input type="checkbox" name="isCorrect" [(ngModel)]="answer.isCorrect">
+          </div>
+          <button type="submit" class="btn btn-danger btn-xs" (click)="deleteAnswer(i)">Убрать</button>
+        </form>
+        <button type="submit" class="btn btn-success btn-sm" (click)="submitAddQuestionForm()">Добавить</button>
+      </form>
+    </div>
+  </div>
+</div>
+<div class="container" *ngIf="!test">
+  <div class="row">
+    <div class="col-md-10 col-md-offset-1 top-margin-20">
+      <div class="alert alert-success" role="alert">
+        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+        Тест не найден.
+      </div>
+    </div>
+  </div>
+</div>

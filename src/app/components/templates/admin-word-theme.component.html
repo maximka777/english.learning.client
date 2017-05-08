@@ -1,12 +1,15 @@
 <div class="container">
   <div *ngIf="theme" class="row">
-    <div class="col-md-12 theme-header">
+    <div class="col-md-1">
+      <i class="glyphicon glyphicon-arrow-left back-btn" (click)="back()"></i>
+    </div>
+    <div class="col-md-10 theme-header">
       <h3>{{theme.name}}</h3>
       <button class="btn btn-danger btn-xs" (click)="removeWordTheme()">Удалить</button>
     </div>
   </div>
   <div class="row">
-    <div *ngIf="currentWord" class="col-md-12">
+    <div *ngIf="currentWord" class="col-md-10 col-md-offset-1">
       <form class="form-inline">
         <div class="form-group">
           <input type="text" class="form-control input-sm" [(ngModel)]="currentWord.english" name="english" placeholder="Слово">
@@ -19,7 +22,7 @@
     </div>
   </div>
   <div class="row">
-    <div *ngIf="words.length" class="col-md-12 words">
+    <div *ngIf="words.length" class="col-md-10 col-md-offset-1 words">
       <table class="table table-hover">
         <thead>
         <tr>
@@ -37,7 +40,7 @@
         </tbody>
       </table>
     </div>
-    <div *ngIf="!words.length" class="col-md-12 top-margin-20">
+    <div *ngIf="!words.length" class="col-md-10 col-md-offset-1 top-margin-20">
       <div class="alert alert-success" role="alert">
         <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
         Ни одного слова не обнаружено.
