@@ -2,10 +2,10 @@ export class Word {
   private id: Number;
   private russian: String;
   private english: String;
-  private themeId: Number;
+  private topicId: Number;
 
-  constructor(themeId) {
+  constructor(topicId) {
     this.id = 0;
-    this.themeId = themeId;
+    this.topicId = +topicId;
   }
 }
