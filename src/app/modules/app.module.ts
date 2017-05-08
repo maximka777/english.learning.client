@@ -22,6 +22,7 @@ import {TestsService} from "../services/tests.service";
 import {AdminTestThemeComponent} from "../components/admin-test-theme.component";
 import {AdminTestComponent} from "../components/admin-test.component";
 import {QuestionsService} from "../services/questions.service";
+import {LoginComponent} from "../components/login.component";
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import {QuestionsService} from "../services/questions.service";
     AdminTestThemesComponent,
     AdminTestThemeComponent,
     AdminTestComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,

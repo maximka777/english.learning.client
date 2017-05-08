@@ -8,7 +8,7 @@ export class HttpClient {
   constructor(private http: Http, private authService: AuthService) {}
 
   createAuthorizationHeader(headers: Headers) {
-    headers.append('Authorization', 'token');
+    headers.append('Authorization', this.authService.token);
   }
 
   get(url, search = {}) {
