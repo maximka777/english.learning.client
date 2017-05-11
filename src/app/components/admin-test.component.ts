@@ -36,7 +36,10 @@ export class AdminTestComponent {
   }
 
   removeTest() {
-
+    this.testsService.remove(this.testId)
+      .then(() => {
+        this.back();
+      });
   }
 
   back() {
