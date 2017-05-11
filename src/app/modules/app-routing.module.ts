@@ -7,10 +7,12 @@ import {AdminTestComponent} from "../components/admin-test.component";
 import {LoginComponent} from "../components/login.component";
 import {RegisterComponent} from "../components/register.component";
 import {UserWordThemesComponent} from "../components/user-word-themes.component";
+import {WordsTrainComponent} from "../components/words-train.component";
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
+  { path: 'train/:themeId', component: WordsTrainComponent },
   { path: 'word-themes', component: UserWordThemesComponent },
   { path: 'admin/:page', component: AdminPanelComponent },
   { path: 'admin/word-theme/:themeId', component: AdminWordThemeComponent },

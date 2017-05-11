@@ -25,6 +25,9 @@ import {QuestionsService} from "../services/questions.service";
 import {LoginComponent} from "../components/login.component";
 import {RegisterComponent} from "../components/register.component";
 import {UserWordThemesComponent} from "../components/user-word-themes.component";
+import {WordsTrainComponent} from "../components/words-train.component";
+import {ResultFunc} from "rxjs/observable/GenerateObservable";
+import {ResultComponent} from "../components/result.component";
 
 @NgModule({
   declarations: [
@@ -39,6 +42,8 @@ import {UserWordThemesComponent} from "../components/user-word-themes.component"
     LoginComponent,
     RegisterComponent,
     UserWordThemesComponent,
+    WordsTrainComponent,
+    ResultComponent,
   ],
   imports: [
     BrowserModule,

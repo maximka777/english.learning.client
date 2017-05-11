@@ -1,0 +1,23 @@
+.result {
+  font-size: 100px;
+  font-weight: bold;
+}
+
+.result-message {
+  font-size: 60px;
+}
+
+.red {
+  color: red;
+}
+
+.green {
+  color: green;
+}
+
+.result-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}

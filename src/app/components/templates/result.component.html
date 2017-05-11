@@ -1,0 +1,9 @@
+<div class="row">
+  <div class="col-md-10 col-md-offset-1 result-wrapper">
+    <span class="result" >{{rightCount}}/{{totalCount}}</span>
+    <span class="result-message {{isGoodResult() ? 'green' : 'red'}}">{{getMessage()}}</span>
+  </div>
+  <div class="col-md-10 col-md-offset-1 result-wrapper">
+    <button class="btn btn-success" (click)="onOKCallback()">Ок</button>
+  </div>
+</div>
