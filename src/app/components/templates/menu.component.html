@@ -12,11 +12,15 @@
 
     <div class="collapse navbar-collapse" [collapse]="isCollapsed">
       <ul class="nav navbar-nav">
-        <li *ngIf="authService.isLogged()" class="active"><a routerLink="/admin/word-themes">Панель администратора</a></li>
+        <li *ngIf="authService.isLogged() && authService.isAdmin()">
+          <a routerLink="/admin/word-themes">Панель администратора</a>
+        </li>
+        <li *ngIf="authService.isLogged() && !authService.isAdmin()"><a routerLink="/word-themes">Слова</a></li>
+
       </ul>
       <ul *ngIf="!authService.isLogged()" class="nav navbar-nav navbar-right">
         <li><a routerLink="/login">Войти</a></li>
-        <li><a routerLink="/">Регистрация</a></li>
+        <li><a routerLink="/register">Регистрация</a></li>
       </ul>
       <ul *ngIf="authService.isLogged()" class="nav navbar-nav navbar-right">
         <li><a style="cursor: pointer" (click)="logout()">Выйти ({{authService.user.username}})</a></li>

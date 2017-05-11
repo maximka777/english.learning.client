@@ -23,6 +23,8 @@ import {AdminTestThemeComponent} from "../components/admin-test-theme.component"
 import {AdminTestComponent} from "../components/admin-test.component";
 import {QuestionsService} from "../services/questions.service";
 import {LoginComponent} from "../components/login.component";
+import {RegisterComponent} from "../components/register.component";
+import {UserWordThemesComponent} from "../components/user-word-themes.component";
 
 @NgModule({
   declarations: [
@@ -35,6 +37,8 @@ import {LoginComponent} from "../components/login.component";
     AdminTestThemeComponent,
     AdminTestComponent,
     LoginComponent,
+    RegisterComponent,
+    UserWordThemesComponent,
   ],
   imports: [
     BrowserModule,

@@ -30,6 +30,10 @@ export class AuthService {
     return !!userInfo;
   }
 
+  isAdmin() {
+    return this.getUserInfo().role === 'admin';
+  }
+
   login(username, password) {
     return new Promise((resolve, reject) => {
       this.http.post(`${this.config.API}/auth/login`, { username, password })
