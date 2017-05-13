@@ -1,0 +1,10 @@
+<div class="container">
+  <div class="row">
+    <ul>
+      <li class="message-block col-lg-4 animate-show-hide" ng-hide="message.removed" [ngClass]="{'message-success' : message.success, 'message-error': message.error}" *ngFor="let message of messages">
+        {{message.error || message.success}}
+      </li>
+    </ul>
+  </div>
+  {{message}}
+</div>

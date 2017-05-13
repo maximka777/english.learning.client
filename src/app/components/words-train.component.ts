@@ -4,6 +4,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {WordThemesService} from "../services/word-themes.service";
 
 import * as _ from 'lodash';
+import {AlertService} from "../services/alert.service";
 
 @Component({
   moduleId: module.id,
@@ -35,7 +36,8 @@ export class WordsTrainComponent {
   constructor(private wordsService: WordsService,
               private activatedRoute: ActivatedRoute,
               private wordThemesService: WordThemesService,
-              private router: Router) {
+              private router: Router,
+              private alertService: AlertService) {
     activatedRoute.params.subscribe((params) => {
       wordThemesService.getOne(params['themeId'])
         .then((theme: any) => {
@@ -95,6 +97,11 @@ export class WordsTrainComponent {
   setMessage(isRight) {
     this.isRight = isRight;
     this.message = isRight ? 'Правильно' : 'Неправильно';
+    const data = {
+      success: this.isRight ? this.message : null,
+      error: !this.isRight ? this.message : null
+    }
+    this.alertService.showMessage(data);
     setTimeout(() => {
       this.message = '';
     }, 1000);
