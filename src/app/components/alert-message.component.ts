@@ -1,7 +1,3 @@
-/**
- * Created by Anastasiya on 12.05.2017.
- */
-
 import {Component} from '@angular/core';
 import {AlertService} from "../services/alert.service";
 
