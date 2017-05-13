@@ -1,0 +1,36 @@
+<div *ngIf="test" class="container">
+  <div class="row">
+    <div class="col-md-1">
+      <i class="glyphicon glyphicon-arrow-left back-btn" (click)="back()"></i>
+    </div>
+    <div class="col-md-10">
+      <h3>{{test.name}}</h3>
+      <div class="progress">
+        <div class="progress-bar" role="progressbar" [style.width]="currentQuestionIndex / totalQuestionCount * 100 + '%'"></div>
+      </div>
+    </div>
+  </div>
+
+  <result *ngIf="result.isActive" [rightCount]="result.rightCount" [totalCount]="result.totalCount"
+          [onOKCallback]="onOKCallback"></result>
+
+  <div *ngIf="currentQuestion" class="row">
+    <div class="col-md-10 col-md-offset-1">
+      <span class="question">{{currentQuestion.questionText}}</span>
+      <hr>
+      <div class="answers-wrapper">
+        <span class="answer" *ngFor="let answer of currentQuestion.answers"
+              (click)="selectAnswer(answer)">{{answer.answerText}}</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div *ngIf="message" class="col-md-10 col-md-offset-1 top-margin-20">
+      <div class="alert {{isRight ? 'alert-success' : 'alert-danger'}} answer-alert" role="alert">
+        {{message}}
+      </div>
+    </div>
+  </div>
+
+</div>

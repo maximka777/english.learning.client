@@ -1,0 +1,26 @@
+.answer {
+  cursor: pointer;
+  transition: 0.2s all linear;
+  font-size: 25px;
+}
+
+.answer:hover {
+  background-color: lightgray;
+}
+
+.answer-alert {
+  font-size: 30px;
+  text-transform: uppercase;
+}
+
+.answers-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.question {
+  text-transform: uppercase;
+  font-size: 28px;
+}

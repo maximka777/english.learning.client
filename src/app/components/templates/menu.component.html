@@ -16,6 +16,7 @@
           <a routerLink="/admin/word-themes">Панель администратора</a>
         </li>
         <li *ngIf="authService.isLogged() && !authService.isAdmin()"><a routerLink="/word-themes">Слова</a></li>
+        <li *ngIf="authService.isLogged() && !authService.isAdmin()"><a routerLink="/test-themes">Тесты</a></li>
 
       </ul>
       <ul *ngIf="!authService.isLogged()" class="nav navbar-nav navbar-right">

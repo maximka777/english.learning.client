@@ -1,8 +1,8 @@
 <div class="container">
   <div class="row themes">
-    <h3>Темы для изучения слов</h3>
+    <h3>Темы тестов</h3>
     <div *ngIf="themes.length" class="col-md-12 themes">
-      <a *ngFor="let theme of themes" (click)="selectWordTheme(theme.id)" class="theme">{{theme.name}}</a>
+      <a *ngFor="let theme of themes" (click)="selectTestTheme(theme.id)" class="theme">{{theme.name}}</a>
     </div>
     <div *ngIf="!themes.length" class="col-md-12 top-margin-20">
       <div class="alert alert-success" role="alert">
@@ -12,31 +12,29 @@
     </div>
   </div>
   <div *ngIf="selectedThemeId" class="row">
-    <h3>Слова из выбранной темы</h3>
-    <a class="btn btn-danger btn-xs" routerLink="/train/{{selectedThemeId}}">Тренироваться</a>
-    <div *ngIf="words && words.length" class="col-md-12">
+    <h3>Тесты из выбранной темы</h3>
+    <a *ngIf="selectedTestId" class="btn btn-danger btn-xs" routerLink="/test/{{selectedTestId}}">Пройти тест</a>
+    <div *ngIf="tests && tests.length" class="col-md-12">
       <table class="table table-hover">
         <thead>
         <tr>
-          <th>Слово</th>
-          <th>Перевод</th>
+          <th>Тест</th>
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let word of words">
-          <td>{{word.english}}</td>
-          <td>{{word.russian}}</td>
+        <tr *ngFor="let test of tests">
+          <td (click)="selectTest(test.id)">{{test.name}}</td>
         </tr>
         </tbody>
       </table>
     </div>
-    <div *ngIf="words && !words.length" class="col-md-12 top-margin-20">
+    <div *ngIf="tests && !tests.length" class="col-md-12 top-margin-20">
       <div class="alert alert-success" role="alert">
         <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-        В данной теме пока нет слов для изучения.
+        В данной теме пока нет тестов.
       </div>
     </div>
-    <div *ngIf="!words" class="col-md-12 top-margin-20">
+    <div *ngIf="!tests" class="col-md-12 top-margin-20">
       <div class="alert alert-success" role="alert">
         <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
         Выберите тему.

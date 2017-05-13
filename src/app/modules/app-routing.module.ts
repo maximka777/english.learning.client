@@ -8,17 +8,21 @@ import {LoginComponent} from "../components/login.component";
 import {RegisterComponent} from "../components/register.component";
 import {UserWordThemesComponent} from "../components/user-word-themes.component";
 import {WordsTrainComponent} from "../components/words-train.component";
+import {UserTestThemesComponent} from "../components/user-test-themes.component";
+import {TestComponent} from "../components/test.component";
 
 const routes: Routes = [
+  { path: '*', redirectTo: '/login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'train/:themeId', component: WordsTrainComponent },
+  { path: 'test/:testId', component: TestComponent },
   { path: 'word-themes', component: UserWordThemesComponent },
+  { path: 'test-themes', component: UserTestThemesComponent },
   { path: 'admin/:page', component: AdminPanelComponent },
   { path: 'admin/word-theme/:themeId', component: AdminWordThemeComponent },
   { path: 'admin/test-theme/:themeId', component: AdminTestThemeComponent },
   { path: 'admin/test-questions/:testId', component: AdminTestComponent },
-  { path: '*', redirectTo: '/login', pathMatch: 'full' },
 ];
 
 @NgModule({

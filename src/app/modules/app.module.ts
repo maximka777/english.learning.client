@@ -28,6 +28,9 @@ import {UserWordThemesComponent} from "../components/user-word-themes.component"
 import {WordsTrainComponent} from "../components/words-train.component";
 import {ResultFunc} from "rxjs/observable/GenerateObservable";
 import {ResultComponent} from "../components/result.component";
+import {UserTestThemesComponent} from "../components/user-test-themes.component";
+import {TestComponent} from "../components/test.component";
+import {TestResultsService} from "../services/test-results.service";
 
 @NgModule({
   declarations: [
@@ -42,8 +45,10 @@ import {ResultComponent} from "../components/result.component";
     LoginComponent,
     RegisterComponent,
     UserWordThemesComponent,
+    UserTestThemesComponent,
     WordsTrainComponent,
     ResultComponent,
+    TestComponent
   ],
   imports: [
     BrowserModule,
@@ -62,6 +67,7 @@ import {ResultComponent} from "../components/result.component";
     TestThemesService,
     TestsService,
     QuestionsService,
+    TestResultsService,
   ],
   bootstrap: [AppComponent]
 })
