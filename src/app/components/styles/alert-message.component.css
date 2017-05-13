@@ -1,28 +1,20 @@
 .message-block {
   display: inline-block;
   text-align: center;
+  float: right;
+  position: absolute;
+  right: 0;
+  top: 50px;
   margin: 5px;
-  padding: 5px;
   height: 40px;
   font-size: 24px;
   font-weight: bold;
-  width: 100%;
+  width: 25%;
   color: white;
+  opacity: 0.5;
 }
 
-.animate-show-hide.ng-hide {
-  opacity: 0;
-}
-
-.animate-show-hide.ng-hide-add,
-.animate-show-hide.ng-hide-remove {
-  transition: all linear 0.5s;
-}
-
-.message-success {
-  background: mediumseagreen;
-}
-
-.message-error {
-  background: firebrick;
+.message {
+  border: 2px solid dimgray;
+  border-radius: 3px;
 }
