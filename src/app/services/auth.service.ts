@@ -31,7 +31,7 @@ export class AuthService {
   }
 
   isAdmin() {
-    return this.getUserInfo().role === 'admin';
+    return !!this.user.isAdmin;
   }
 
   login(username, password) {
