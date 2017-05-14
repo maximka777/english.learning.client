@@ -3,6 +3,7 @@ import {Router} from "@angular/router";
 import {AuthService} from "../services/auth.service";
 import {RegisterData} from "../models/RegisterData";
 import {UsersService} from "../services/users.service";
+import {AlertService} from "../services/alert.service";
 
 @Component({
   moduleId: module.id,
@@ -15,11 +16,13 @@ export class RegisterComponent {
   currentRegisterData = new RegisterData();
 
   constructor(private router: Router,
-              private usersService: UsersService) { }
+              private usersService: UsersService,
+              private alertService: AlertService) { }
 
   register() {
     this.usersService.register(this.currentRegisterData)
       .then(() => {
+        this.alertService.showSuccessMessage('Регистрация прошла успешно. Авторизуйтесь.');
         this.router.navigate(['/login']);
       });
   }

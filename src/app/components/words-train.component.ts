@@ -97,11 +97,11 @@ export class WordsTrainComponent {
   setMessage(isRight) {
     this.isRight = isRight;
     this.message = isRight ? 'Правильно' : 'Неправильно';
-    const data = {
-      success: this.isRight ? this.message : null,
-      error: !this.isRight ? this.message : null
-    }
-    this.alertService.showMessage(data);
+    // const data = {
+    //   success: this.isRight ? this.message : null,
+    //   error: !this.isRight ? this.message : null
+    // }
+    isRight ? this.alertService.showSuccessMessage('Правильно') : this.alertService.showErrorMessage('Неправильно');
     setTimeout(() => {
       this.message = '';
     }, 1000);

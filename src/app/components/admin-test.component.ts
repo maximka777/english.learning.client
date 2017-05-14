@@ -5,6 +5,7 @@ import {QuestionsService} from "../services/questions.service";
 import {Question} from "../models/Question";
 import {Answer} from "../models/Answer";
 import {Location} from '@angular/common';
+import {AlertService} from "../services/alert.service";
 
 @Component({
   selector: 'admin-test-questions',
@@ -21,7 +22,8 @@ export class AdminTestComponent {
               private questionsService: QuestionsService,
               private activatedRoute: ActivatedRoute,
               private router: Router,
-              private location: Location) {
+              private location: Location,
+              private alertService: AlertService) {
     activatedRoute.params.subscribe((params: Params) => {
       this.testId = params['testId'];
       this.loadTest();
@@ -38,6 +40,7 @@ export class AdminTestComponent {
   removeTest() {
     this.testsService.remove(this.testId)
       .then(() => {
+        this.alertService.showSuccessMessage('Тест удалён.');
         this.back();
       });
   }
@@ -50,6 +53,7 @@ export class AdminTestComponent {
     this.questionsService.addQuestion(this.currentQuestion)
       .then(question => {
         this.test.questions.push(question);
+        this.alertService.showSuccessMessage('Вопрос добавлен.');
         this.toggleAddQuestionForm();
       });
   }
@@ -74,6 +78,7 @@ export class AdminTestComponent {
   removeQuestion(question) {
     this.questionsService.remove(question.id)
       .then(() => {
+        this.alertService.showSuccessMessage('Вопрос удалён.');
         this.test.questions = this.test.questions.filter(q => q.id !== question.id);
       });
   }
