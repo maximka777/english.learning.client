@@ -31,6 +31,8 @@ import {ResultComponent} from "../components/result.component";
 import {UserTestThemesComponent} from "../components/user-test-themes.component";
 import {TestComponent} from "../components/test.component";
 import {TestResultsService} from "../services/test-results.service";
+import {AlertMessageComponent} from "../components/alert-message.component";
+import {AlertService} from "../services/alert.service";
 
 @NgModule({
   declarations: [
@@ -48,7 +50,8 @@ import {TestResultsService} from "../services/test-results.service";
     UserTestThemesComponent,
     WordsTrainComponent,
     ResultComponent,
-    TestComponent
+    TestComponent,
+    AlertMessageComponent
   ],
   imports: [
     BrowserModule,
@@ -68,6 +71,7 @@ import {TestResultsService} from "../services/test-results.service";
     TestsService,
     QuestionsService,
     TestResultsService,
+    AlertService,
   ],
   bootstrap: [AppComponent]
 })

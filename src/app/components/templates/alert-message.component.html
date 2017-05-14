@@ -1,0 +1,12 @@
+<div class="message-block">
+  <div *ngFor="let message of messages"
+       class="alert message" role="alert"
+       [ngClass]="{'alert-danger' : message.error, 'alert-success' : message.success }">
+    <span class="glyphicon"
+          [ngClass]="{'glyphicon-ban-circle' : message.error, 'glyphicon-ok-sign' : message.success}"
+          aria-hidden="true">
+    </span>
+    <span class="sr-only">Message:</span>
+    {{message.error || message.success}}
+  </div>
+</div>
