@@ -40,10 +40,10 @@ export class TestComponent implements OnInit {
       testsService.getOne(params['testId'])
         .then((test: any) => {
           this.currentQuestionIndex = 0;
-          this.totalQuestionCount = test.questions.length;
-          this.result.totalCount = test.questions.length;
           this.test = test;
-          this.test.questions = _.shuffle(this.test.questions);
+          this.test.questions = _.shuffle(this.test.questions.filter(question => !!question.answers.length));
+          this.totalQuestionCount = this.test.questions.length;
+          this.result.totalCount = this.test.questions.length;
           this.currentQuestion = test ? this.test.questions.pop() : null;
         });
     });
@@ -84,7 +84,7 @@ export class TestComponent implements OnInit {
   }
 
   handleEndOfTest() {
-    this.testResultsService.createOne(new TestResult(this.test.id, this.authService.user.id, this.result.rightCount))
+    this.testResultsService.createOne(new TestResult(this.test.id, this.authService.user.id, this.result.rightCount, this.totalQuestionCount))
       .then(() => {
         console.log('test result is saved');
       });
