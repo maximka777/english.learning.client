@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {WordThemesService} from "../services/word-themes.service";
 
@@ -14,7 +14,7 @@ import {AuthService} from "../services/auth.service";
   templateUrl: './templates/test.component.html',
   styleUrls: ['./styles/test.component.css']
 })
-export class TestComponent {
+export class TestComponent implements OnInit {
   test = null;
   currentQuestion = null;
   currentQuestionIndex: number;
@@ -47,6 +47,12 @@ export class TestComponent {
           this.currentQuestion = test ? this.test.questions.pop() : null;
         });
     });
+  }
+
+  ngOnInit() {
+    if(!this.authService.isLogged()) {
+      return this.authService.navigateToLogin();
+    }
   }
 
   back() {

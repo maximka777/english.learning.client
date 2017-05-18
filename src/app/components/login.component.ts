@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {AuthService} from "../services/auth.service";
 import {LoginData} from "../models/LoginData";
 import {Router} from "@angular/router";
@@ -9,7 +9,7 @@ import {AlertService} from "../services/alert.service";
   templateUrl: 'templates/login.component.html',
   styleUrls: ['styles/login.component.css']
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   currentLoginData = new LoginData();
 
   constructor(private authService: AuthService,
@@ -24,6 +24,12 @@ export class LoginComponent {
         this.alertService.showSuccessMessage('Авторизация прошла успешно.');
         this.router.navigate(['/']);
       });
+  }
+
+  ngOnInit() {
+    if(this.authService.isLogged()) {
+      return this.authService.navigateToUserRoot();
+    }
   }
 
   validationError = {

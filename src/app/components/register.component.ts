@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {AuthService} from "../services/auth.service";
 import {RegisterData} from "../models/RegisterData";
@@ -11,12 +11,13 @@ import {AlertService} from "../services/alert.service";
   templateUrl: './templates/register.component.html',
   styleUrls: ['./styles/register.component.css']
 })
-export class RegisterComponent {
+export class RegisterComponent implements OnInit {
 
   currentRegisterData = new RegisterData();
 
   constructor(private router: Router,
               private usersService: UsersService,
+              private authService: AuthService,
               private alertService: AlertService) { }
 
   register() {
@@ -27,6 +28,12 @@ export class RegisterComponent {
         this.alertService.showSuccessMessage('Регистрация прошла успешно. Авторизуйтесь.');
         this.router.navigate(['/login']);
       });
+  }
+
+  ngOnInit() {
+    if(this.authService.isLogged()) {
+      return this.authService.navigateToUserRoot();
+    }
   }
 
   validationError = {

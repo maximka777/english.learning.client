@@ -1,6 +1,6 @@
 <div class="container">
   <div class="row">
-    <div class="col-md-10 col-md-offset-1">
+    <div *ngIf="authService.user" class="col-md-10 col-md-offset-1">
       <h1>Привет, {{authService.user.username}}</h1>
       <p>На этой странице ты можешь посмотреть свой прогресс.</p>
     </div>

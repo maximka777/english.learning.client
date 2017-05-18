@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {TestsService} from "../services/tests.service";
 import {Router, ActivatedRoute, Params} from "@angular/router";
 import {QuestionsService} from "../services/questions.service";
@@ -6,13 +6,14 @@ import {Question} from "../models/Question";
 import {Answer} from "../models/Answer";
 import {Location} from '@angular/common';
 import {AlertService} from "../services/alert.service";
+import {AuthService} from "../services/auth.service";
 
 @Component({
   selector: 'admin-test-questions',
   templateUrl: 'templates/admin-test.component.html',
   styleUrls: ['styles/admin-test.component.css']
 })
-export class AdminTestComponent {
+export class AdminTestComponent implements OnInit {
   testId: Number;
   test: any;
   currentQuestion: Question;
@@ -22,6 +23,7 @@ export class AdminTestComponent {
   constructor(private testsService: TestsService,
               private questionsService: QuestionsService,
               private activatedRoute: ActivatedRoute,
+              private authService: AuthService,
               private router: Router,
               private location: Location,
               private alertService: AlertService) {
@@ -30,6 +32,15 @@ export class AdminTestComponent {
       this.loadTest();
     });
     this.resetValidationError();
+  }
+
+  ngOnInit() {
+    if(!this.authService.isLogged()) {
+      return this.authService.navigateToLogin();
+    }
+    if(!this.authService.isAdmin()) {
+      return this.authService.navigateToUserRoot();
+    }
   }
 
   loadTest() {

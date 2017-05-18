@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {WordsService} from "../services/words.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {WordThemesService} from "../services/word-themes.service";
 
 import * as _ from 'lodash';
 import {AlertService} from "../services/alert.service";
+import {AuthService} from "../services/auth.service";
 
 @Component({
   moduleId: module.id,
@@ -12,7 +13,7 @@ import {AlertService} from "../services/alert.service";
   templateUrl: './templates/words-train.component.html',
   styleUrls: ['./styles/words-train.component.css']
 })
-export class WordsTrainComponent {
+export class WordsTrainComponent implements OnInit {
   words = [];
   wordsForTrain = [];
   currentWords = [];
@@ -36,6 +37,7 @@ export class WordsTrainComponent {
   constructor(private wordsService: WordsService,
               private activatedRoute: ActivatedRoute,
               private wordThemesService: WordThemesService,
+              private authService: AuthService,
               private router: Router,
               private alertService: AlertService) {
     activatedRoute.params.subscribe((params) => {
@@ -46,7 +48,7 @@ export class WordsTrainComponent {
             wordsService.getAll(theme.id)
               .then((words: any) => {
                 this.words = _.shuffle(words);
-                this.result.totalCount = this.words.length;
+                // this.result.totalCount = this.words.length;
                 this.currentWords = words.slice(0, 5);
                 this.words.splice(0, 5);
                 this.currentEnglishWords = _.shuffle(this.currentWords.map(word => word.english));
@@ -55,6 +57,15 @@ export class WordsTrainComponent {
           }
         });
     });
+  }
+
+  ngOnInit() {
+    if(!this.authService.isLogged()) {
+      return this.authService.navigateToLogin();
+    }
+    if(this.authService.isAdmin()) {
+      return this.authService.navigateToAdminRoot();
+    }
   }
 
   selectRussianWord(word) {
@@ -73,6 +84,7 @@ export class WordsTrainComponent {
 
   checkSelectedWords() {
     if(this.selectedEnglishWord && this.selectedRussianWord) {
+      this.result.totalCount++;
       if(this.getTranslation(this.selectedRussianWord) === this.selectedEnglishWord) {
         this.setMessage(true);
         this.result.rightCount++;
@@ -101,7 +113,7 @@ export class WordsTrainComponent {
     //   success: this.isRight ? this.message : null,
     //   error: !this.isRight ? this.message : null
     // }
-    isRight ? this.alertService.showSuccessMessage('Правильно') : this.alertService.showErrorMessage('Неправильно');
+    // isRight ? this.alertService.showSuccessMessage('Правильно') : this.alertService.showErrorMessage('Неправильно');
     setTimeout(() => {
       this.message = '';
     }, 1000);

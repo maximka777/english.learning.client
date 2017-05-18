@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {AuthService} from "../services/auth.service";
 
 @Component({
@@ -7,8 +7,14 @@ import {AuthService} from "../services/auth.service";
   templateUrl: './templates/profile.component.html',
   styleUrls: ['./styles/profile.component.css']
 })
-export class ProfileComponent {
+export class ProfileComponent implements OnInit {
 
   constructor(private authService: AuthService) { }
+
+  ngOnInit() {
+    if(!this.authService.isLogged()) {
+      return this.authService.navigateToLogin();
+    }
+  }
 
 }

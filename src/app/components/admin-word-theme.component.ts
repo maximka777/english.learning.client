@@ -1,17 +1,18 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {WordThemesService} from "../services/word-themes.service";
 import {WordTheme} from "../models/WordTheme";
 import {Word} from "../models/Word";
 import {WordsService} from "../services/words.service";
 import {Params, ActivatedRoute, Router} from "@angular/router";
 import {AlertService} from "../services/alert.service";
+import {AuthService} from "../services/auth.service";
 
 @Component({
   selector: 'admin-word-theme',
   templateUrl: 'templates/admin-word-theme.component.html',
   styleUrls: ['styles/admin-word-theme.component.css']
 })
-export class AdminWordThemeComponent {
+export class AdminWordThemeComponent implements OnInit {
   themeId: Number;
   theme: any;
   currentWord: Word;
@@ -20,6 +21,7 @@ export class AdminWordThemeComponent {
 
   constructor(private alertService: AlertService,
               private wordsService: WordsService,
+              private authService: AuthService,
               private wordThemesService: WordThemesService,
               private activatedRoute: ActivatedRoute,
               private router: Router) {
@@ -28,6 +30,15 @@ export class AdminWordThemeComponent {
       this.loadTheme();
     });
     this.resetValidationError();
+  }
+
+  ngOnInit() {
+    if(!this.authService.isLogged()) {
+      return this.authService.navigateToLogin();
+    }
+    if(!this.authService.isAdmin()) {
+      return this.authService.navigateToUserRoot();
+    }
   }
 
   loadTheme() {

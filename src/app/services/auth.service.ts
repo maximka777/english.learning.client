@@ -2,10 +2,11 @@ import {Injectable, Inject} from '@angular/core';
 import {APP_CONFIG} from "../configs/app.config";
 import 'rxjs/add/operator/map';
 import {Http, Headers} from "@angular/http";
+import {Router} from "@angular/router";
 
 @Injectable()
 export class AuthService {
-  constructor(@Inject(APP_CONFIG) private config: any, private http: Http) { }
+  constructor(@Inject(APP_CONFIG) private config: any, private http: Http, private router: Router) { }
 
   saveUserInfo(value) {
     localStorage.setItem('eng-learn-user-info', JSON.stringify(value));
@@ -32,6 +33,18 @@ export class AuthService {
 
   isAdmin() {
     return !!this.user.isAdmin;
+  }
+
+  navigateToLogin() {
+    this.router.navigate(['/login']);
+  }
+
+  navigateToUserRoot() {
+    this.router.navigate(['/']);
+  }
+
+  navigateToAdminRoot() {
+    this.router.navigate(['/']);
   }
 
   login(username, password) {

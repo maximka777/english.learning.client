@@ -1,16 +1,17 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {TestThemesService} from "../services/test-themes.service";
 import {TestsService} from "../services/tests.service";
 import {Router, ActivatedRoute, Params} from "@angular/router";
 import {TestTheme} from "../models/TestTheme";
 import {Test} from "../models/Test";
+import {AuthService} from "../services/auth.service";
 
 @Component({
   selector: 'admin-test-theme',
   templateUrl: 'templates/admin-test-theme.component.html',
   styleUrls: ['styles/admin-test-theme.component.css']
 })
-export class AdminTestThemeComponent {
+export class AdminTestThemeComponent implements OnInit {
   themeId: Number;
   theme: TestTheme;
   currentTest: Test;
@@ -18,6 +19,7 @@ export class AdminTestThemeComponent {
 
   constructor(private testsService: TestsService,
               private testThemesService: TestThemesService,
+              private authService: AuthService,
               private activatedRoute: ActivatedRoute,
               private router: Router) {
     activatedRoute.params.subscribe((params: Params) => {
@@ -25,6 +27,15 @@ export class AdminTestThemeComponent {
       this.loadTheme();
 
     });
+  }
+
+  ngOnInit() {
+    if(!this.authService.isLogged()) {
+      return this.authService.navigateToLogin();
+    }
+    if(!this.authService.isAdmin()) {
+      return this.authService.navigateToUserRoot();
+    }
   }
 
   loadTheme() {
