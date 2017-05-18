@@ -25,19 +25,22 @@
     </div>
   </div>
   <div class="row" *ngIf="isAddQuestionFormActive">
-    <div class="col-md-12">
+    <div class="col-md-10 col-md-offset-1">
       <form>
         <div class="form-group">
           <label>Вопрос</label>
+          <error-message [status]="validationError.questionText.status" [message]="validationError.questionText.message"></error-message>
           <input type="text" class="form-control" placeholder="Текст вопроса" [(ngModel)]="currentQuestion.questionText" name="questionText">
         </div>
         <div class="form-group" style="margin-left: 20px">
           <label>Варианты ответов</label>
           <button type="submit" class="btn btn-success btn-xs" (click)="addAnswer()">Добавить вариант ответа</button>
+          <error-message [status]="validationError.oneCorrect.status" [message]="validationError.oneCorrect.message"></error-message>
         </div>
         <form class="answer-form" *ngFor="let answer of currentQuestion.answers; let i = index">
           <div class="form-group">
             <label>Текст ответа</label>
+            <error-message [status]="validationError.answers[i].status" [message]="validationError.answers[i].message"></error-message>
             <input type="text" class="form-control" placeholder="Текст ответа" [(ngModel)]="answer.answerText" name="answerText">
           </div>
           <div class="form-group">

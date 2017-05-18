@@ -4,6 +4,7 @@ import {WordTheme} from "../models/WordTheme";
 import {Word} from "../models/Word";
 import {WordsService} from "../services/words.service";
 import {Params, ActivatedRoute, Router} from "@angular/router";
+import {AlertService} from "../services/alert.service";
 
 @Component({
   selector: 'admin-word-theme',
@@ -15,16 +16,18 @@ export class AdminWordThemeComponent {
   theme: any;
   currentWord: Word;
   words = [];
+  validationError = null;
 
-  constructor(private wordsService: WordsService,
+  constructor(private alertService: AlertService,
+              private wordsService: WordsService,
               private wordThemesService: WordThemesService,
               private activatedRoute: ActivatedRoute,
               private router: Router) {
     activatedRoute.params.subscribe((params: Params) => {
       this.themeId = params['themeId'];
       this.loadTheme();
-
     });
+    this.resetValidationError();
   }
 
   loadTheme() {
@@ -44,8 +47,11 @@ export class AdminWordThemeComponent {
   }
 
   submitAddWordForm() {
+    this.validateWord();
+    if(!this.isValidWord()) return;
     this.wordsService.createOne(this.currentWord)
       .then(data => {
+        this.alertService.showSuccessMessage('Слово добавлено.');
         this.words.push(Object.assign({}, data));
         this.currentWord = new Word(this.themeId);
       });
@@ -59,6 +65,7 @@ export class AdminWordThemeComponent {
     this.wordsService.remove(wordId)
       .then(data => {
         this.words = this.words.filter(word => word.id !== wordId);
+        this.alertService.showSuccessMessage('Слово удалено.');
       });
   }
 
@@ -66,6 +73,30 @@ export class AdminWordThemeComponent {
     this.wordThemesService.remove(this.themeId)
       .then(data => {
         this.router.navigate(['/admin/word-themes']);
+        this.alertService.showSuccessMessage('Тема удалена.');
       });
+  }
+
+  validateWord() {
+    this.validationError.english.status = !this.currentWord.english.length;
+    this.validationError.russian.status = !this.currentWord.russian.length;
+  }
+
+  isValidWord() {
+    return !this.validationError.russian.status
+      && !this.validationError.english.status;
+  }
+
+  resetValidationError() {
+    this.validationError = {
+      russian: {
+        status: false,
+        message: 'Введите перевод'
+      },
+      english: {
+        status: false,
+        message: 'Введите слово'
+      },
+    };
   }
 }

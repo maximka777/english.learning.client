@@ -19,6 +19,8 @@ export class AdminTestThemesComponent {
   }
 
   submitAddThemeForm() {
+    this.validateTestTheme();
+    if(!this.isValidTestTheme()) return;
     this.testThemesService.createOne(this.currentTheme)
       .then(data => {
         this.themes.push(Object.assign({}, data));
@@ -31,5 +33,25 @@ export class AdminTestThemesComponent {
       .then(data => {
         this.themes = this.themes.filter(t => t.id !== themeId);
       });
+  }
+
+  validationError = {
+    name: {
+      status: false,
+      message: ''
+    }
+  };
+
+  validateTestTheme() {
+    if(!this.currentTheme.name.length) {
+      this.validationError.name.status = true;
+      this.validationError.name.message = 'Введите название темы';
+    } else {
+      this.validationError.name.status = false;
+    }
+  }
+
+  isValidTestTheme() {
+    return !this.validationError.name.status;
   }
 }

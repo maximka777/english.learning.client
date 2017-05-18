@@ -33,6 +33,8 @@ import {TestComponent} from "../components/test.component";
 import {TestResultsService} from "../services/test-results.service";
 import {AlertMessageComponent} from "../components/alert-message.component";
 import {AlertService} from "../services/alert.service";
+import {ProfileComponent} from "../components/profile.component";
+import {ErrorMessageComponent} from "../components/error-message.component";
 
 @NgModule({
   declarations: [
@@ -51,7 +53,9 @@ import {AlertService} from "../services/alert.service";
     WordsTrainComponent,
     ResultComponent,
     TestComponent,
-    AlertMessageComponent
+    AlertMessageComponent,
+    ProfileComponent,
+    ErrorMessageComponent,
   ],
   imports: [
     BrowserModule,

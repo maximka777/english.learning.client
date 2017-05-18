@@ -8,6 +8,7 @@ export class Question {
   constructor(testId) {
     this.id = 0;
     this.testId = testId;
+    this.questionText = '';
     this.answers.push(new Answer());
   }
 }

@@ -1,19 +1,11 @@
 .message-block {
   display: inline-block;
-  /*text-align: center;*/
   float: right;
   position: absolute;
   right: 0;
   top: 50px;
   margin: 5px;
   height: 40px;
-  /*font-size: 24px;*/
-  /*font-weight: bold;*/
   width: 25%;
-  /*color: white;*/
-}
-
-.message {
-  border: 2px solid dimgray;
-  border-radius: 3px;
+  z-index: 10;
 }

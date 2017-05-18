@@ -6,5 +6,6 @@ export class TestTheme {
   constructor() {
     this.id = 0;
     this.complexity = 5;
+    this.name = '';
   }
 }

@@ -17,6 +17,7 @@ export class AdminTestComponent {
   test: any;
   currentQuestion: Question;
   isAddQuestionFormActive = false;
+  validationError = null;
 
   constructor(private testsService: TestsService,
               private questionsService: QuestionsService,
@@ -28,6 +29,7 @@ export class AdminTestComponent {
       this.testId = params['testId'];
       this.loadTest();
     });
+    this.resetValidationError();
   }
 
   loadTest() {
@@ -50,11 +52,14 @@ export class AdminTestComponent {
   }
 
   submitAddQuestionForm() {
+    this.validateQuestion();
+    if(!this.isValidQuestion()) return;
     this.questionsService.addQuestion(this.currentQuestion)
       .then(question => {
         this.test.questions.push(question);
         this.alertService.showSuccessMessage('Вопрос добавлен.');
         this.toggleAddQuestionForm();
+        this.resetValidationError();
       });
   }
 
@@ -63,16 +68,22 @@ export class AdminTestComponent {
       this.isAddQuestionFormActive = false;
     } else {
       this.isAddQuestionFormActive = true;
+      this.resetValidationError();
       this.currentQuestion = new Question(this.testId);
     }
   }
 
   addAnswer() {
     this.currentQuestion.answers.push(new Answer());
+    this.validationError.answers.push({
+      status: false,
+      message: 'Введите текст ответа'
+    });
   }
 
   deleteAnswer(index) {
     this.currentQuestion.answers.splice(index, 1);
+    this.validationError.answers.splice(index, 1);
   }
 
   removeQuestion(question) {
@@ -81,5 +92,51 @@ export class AdminTestComponent {
         this.alertService.showSuccessMessage('Вопрос удалён.');
         this.test.questions = this.test.questions.filter(q => q.id !== question.id);
       });
+  }
+
+  hasOnlyOneCorrect(answers) {
+    let has = false;
+    let errorStatus = false;
+
+    answers.forEach(answer => {
+      if(answer.isCorrect && has) {
+        errorStatus = true;
+      } else if(answer.isCorrect) {
+        has = true;
+      }
+    });
+    return errorStatus || !has;
+  }
+
+  validateQuestion() {
+    this.validationError.questionText.status = !this.currentQuestion.questionText.length;
+    this.validationError.oneCorrect.status = this.hasOnlyOneCorrect(this.currentQuestion.answers);
+
+    for(let i = 0; i < this.validationError.answers.length; i++) {
+        this.validationError.answers[i].status = !this.currentQuestion.answers[i].answerText.length;
+    }
+  }
+
+  isValidQuestion() {
+    return !this.validationError.questionText.status
+      && !this.validationError.oneCorrect.status
+      && !this.validationError.answers.some(e => e.status);
+  }
+
+  resetValidationError() {
+    this.validationError = {
+      questionText: {
+        status: false,
+        message: 'Введите текст вопроса'
+      },
+      oneCorrect: {
+        status: false,
+        message: 'Должен быть один правильный ответ'
+      },
+      answers: [{
+        status: false,
+        message: 'Введите текст ответа'
+      }],
+    };
   }
 }

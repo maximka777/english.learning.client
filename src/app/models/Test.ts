@@ -6,5 +6,6 @@ export class Test {
   constructor(topicId) {
     this.id = 0;
     this.topicId = topicId;
+    this.name = '';
   }
 }

@@ -19,10 +19,32 @@ export class AdminWordThemesComponent {
   }
 
   submitAddThemeForm() {
+    this.validateWordTheme();
+    if(!this.isValidWordTheme()) return;
     this.wordThemesService.createOne(this.currentTheme)
       .then(data => {
         this.themes.push(Object.assign({}, data));
         this.currentTheme = new WordTheme();
       });
+  }
+
+  validationError = {
+    name: {
+      status: false,
+      message: ''
+    }
+  };
+
+  validateWordTheme() {
+    if(!this.currentTheme.name.length) {
+      this.validationError.name.status = true;
+      this.validationError.name.message = 'Введите название темы';
+    } else {
+      this.validationError.name.status = false;
+    }
+  }
+
+  isValidWordTheme() {
+    return !this.validationError.name.status;
   }
 }

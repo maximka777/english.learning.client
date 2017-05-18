@@ -20,10 +20,40 @@ export class RegisterComponent {
               private alertService: AlertService) { }
 
   register() {
+    this.validateData();
+    if(!this.isValidData()) return;
     this.usersService.register(this.currentRegisterData)
       .then(() => {
         this.alertService.showSuccessMessage('Регистрация прошла успешно. Авторизуйтесь.');
         this.router.navigate(['/login']);
       });
+  }
+
+  validationError = {
+    username: {
+      status: false,
+      message: 'Введите имя пользователя'
+    },
+    password: {
+      status: false,
+      message: 'Введите пароль'
+    },
+    confirmPassword: {
+      status: false,
+      message: 'Пароли не совпадают'
+    },
+  };
+
+  validateData() {
+    this.validationError.username.status = !this.currentRegisterData.username.length;
+    this.validationError.password.status = !this.currentRegisterData.password.length;
+    this.validationError.confirmPassword.status = this.currentRegisterData.password
+      !== this.currentRegisterData.confirmPassword;
+  }
+
+  isValidData() {
+    return !this.validationError.username.status
+      && !this.validationError.password.status
+      && !this.validationError.confirmPassword.status;
   }
 }

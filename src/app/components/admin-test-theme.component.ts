@@ -44,6 +44,8 @@ export class AdminTestThemeComponent {
   }
 
   submitAddTestForm() {
+    this.validateTest();
+    if(!this.isValidTest()) return;
     this.testsService.createOne(this.currentTest)
       .then(data => {
         this.tests.push(Object.assign({}, data));
@@ -69,5 +71,18 @@ export class AdminTestThemeComponent {
       });
   }
 
+  validationError = {
+    name: {
+      status: false,
+      message: 'Введите название теста'
+    }
+  };
 
+  validateTest() {
+    this.validationError.name.status = !this.currentTest.name.length;
+  }
+
+  isValidTest() {
+    return !this.validationError.name.status;
+  }
 }

@@ -10,6 +10,7 @@
   </div>
   <div class="row">
     <div *ngIf="currentTest" class="col-md-10 col-md-offset-1">
+      <error-message [status]="validationError.name.status" [message]="validationError.name.message"></error-message>
       <form class="form-inline">
         <div class="form-group">
           <input type="text" class="form-control input-sm" [(ngModel)]="currentTest.name" name="name" placeholder="Название теста">

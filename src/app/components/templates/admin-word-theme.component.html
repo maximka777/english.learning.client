@@ -10,6 +10,8 @@
   </div>
   <div class="row">
     <div *ngIf="currentWord" class="col-md-10 col-md-offset-1">
+      <error-message [status]="validationError.english.status" [message]="validationError.english.message"></error-message>
+      <error-message [status]="validationError.russian.status" [message]="validationError.russian.message"></error-message>
       <form class="form-inline">
         <div class="form-group">
           <input type="text" class="form-control input-sm" [(ngModel)]="currentWord.english" name="english" placeholder="Слово">
