@@ -8,7 +8,7 @@ import {APP_CONFIG, AppConfig} from "../configs/app.config";
 import {UsersService} from "../services/users.service";
 import {AppRoutingModule} from "./app-routing.module";
 import {MenuComponent} from "../components/menu.component";
-import {CollapseModule} from "ng2-bootstrap";
+import {Ng2BootstrapModule, CollapseModule, ModalModule} from "ng2-bootstrap";
 import {AdminPanelComponent} from "../components/admin-panel.component";
 import {AdminWordThemesComponent} from "../components/admin-word-themes.component";
 import {WordThemesService} from "../services/word-themes.service";
@@ -62,7 +62,9 @@ import {ErrorMessageComponent} from "../components/error-message.component";
     FormsModule,
     HttpModule,
     AppRoutingModule,
+    Ng2BootstrapModule,
     CollapseModule,
+    ModalModule.forRoot()
   ],
   providers: [
     { provide: APP_CONFIG, useValue: AppConfig },

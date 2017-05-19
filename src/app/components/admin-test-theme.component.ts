@@ -1,10 +1,11 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {TestThemesService} from "../services/test-themes.service";
 import {TestsService} from "../services/tests.service";
 import {Router, ActivatedRoute, Params} from "@angular/router";
 import {TestTheme} from "../models/TestTheme";
 import {Test} from "../models/Test";
 import {AuthService} from "../services/auth.service";
+import {ModalDirective} from "ng2-bootstrap";
 
 @Component({
   selector: 'admin-test-theme',
@@ -16,6 +17,10 @@ export class AdminTestThemeComponent implements OnInit {
   theme: TestTheme;
   currentTest: Test;
   tests = [];
+  isEdit: Boolean;
+  currentTheory: String;
+
+  @ViewChild('theoryModal') public theoryModal: ModalDirective;
 
   constructor(private testsService: TestsService,
               private testThemesService: TestThemesService,
@@ -25,7 +30,7 @@ export class AdminTestThemeComponent implements OnInit {
     activatedRoute.params.subscribe((params: Params) => {
       this.themeId = params['themeId'];
       this.loadTheme();
-
+      this.isEdit = false;
     });
   }
 
@@ -62,6 +67,33 @@ export class AdminTestThemeComponent implements OnInit {
         this.tests.push(Object.assign({}, data));
         this.currentTest = new Test(this.themeId);
       });
+  }
+
+  openTheoryModalForAdd() {
+    this.currentTheory = this.theme.theory || '';
+    this.isEdit = false;
+    this.openTheoryModal();
+  }
+
+  openTheoryModal() {
+    this.theoryModal.show();
+  }
+
+  closeTheoryModal() {
+    this.theoryModal.hide();
+  }
+
+  onTheoryFormSubmit() {
+    this.testThemesService.updateTherory(this.themeId, this.currentTheory)
+      .then(theme => {
+        this.restoreState(theme);
+      })
+      .catch((err) => {});
+  }
+
+  restoreState(theme) {
+    this.closeTheoryModal();
+    this.theme = theme;
   }
 
   back() {
