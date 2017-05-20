@@ -1,10 +1,12 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {TestThemesService} from "../services/test-themes.service";
 import {TestsService} from "../services/tests.service";
 import {Router, ActivatedRoute, Params} from "@angular/router";
 import {TestTheme} from "../models/TestTheme";
 import {Test} from "../models/Test";
 import {AuthService} from "../services/auth.service";
+import {AlertService} from "../services/alert.service";
+import {ModalDirective} from "ng2-bootstrap";
 
 @Component({
   selector: 'admin-test-theme',
@@ -16,16 +18,20 @@ export class AdminTestThemeComponent implements OnInit {
   theme: TestTheme;
   currentTest: Test;
   tests = [];
+  currentTheory: String;
+
+  @ViewChild('theoryModal') public theoryModal: ModalDirective;
 
   constructor(private testsService: TestsService,
               private testThemesService: TestThemesService,
               private authService: AuthService,
               private activatedRoute: ActivatedRoute,
-              private router: Router) {
+              private router: Router,
+              private alertService: AlertService
+  ) {
     activatedRoute.params.subscribe((params: Params) => {
       this.themeId = params['themeId'];
       this.loadTheme();
-
     });
   }
 
@@ -43,6 +49,7 @@ export class AdminTestThemeComponent implements OnInit {
       .then((theme: any) => {
         this.theme = theme;
         this.currentTest = new Test(this.themeId);
+        this.currentTheory = this.theme.theory;
         this.loadTests();
       });
   }
@@ -62,6 +69,41 @@ export class AdminTestThemeComponent implements OnInit {
         this.tests.push(Object.assign({}, data));
         this.currentTest = new Test(this.themeId);
       });
+  }
+
+  openTheoryModalForAdd() {
+    this.currentTheory = this.theme.theory || '';
+    this.openTheoryModal();
+  }
+
+  openTheoryModal() {
+    this.theoryModal.show();
+  }
+
+  closeTheoryModal() {
+    this.theoryModal.hide();
+  }
+
+  onTheoryFormSubmit() {
+    this.testThemesService.updateTheory(this.themeId, this.currentTheory)
+      .then(theme => {
+        this.alertService.showSuccessMessage('теория сохранена успешно');
+        this.restoreState(theme);
+      })
+      .catch((err) => {
+        this.closeTheoryModal();
+        const error_message = JSON.parse(err._body).data;
+        this.alertService.showErrorMessage(error_message);
+      });
+  }
+
+  onTheoryFormClose() {
+    this.closeTheoryModal();
+  }
+
+  restoreState(theme) {
+    this.closeTheoryModal();
+    this.theme = theme;
   }
 
   back() {
