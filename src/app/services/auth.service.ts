@@ -44,7 +44,7 @@ export class AuthService {
   }
 
   navigateToAdminRoot() {
-    this.router.navigate(['/']);
+    this.router.navigate(['/admin/word-themes']);
   }
 
   login(username, password) {

@@ -19,3 +19,20 @@
   display: flex;
   flex-wrap: wrap;
 }
+
+.theory-modal {
+  display: flex;
+  flex-direction: column;
+  height: 500px;
+}
+
+.theory-block {
+  height: 90%;
+  margin-bottom: 20px;
+  overflow-y: auto;
+}
+
+.theory-text {
+  font-style: italic;
+  font-size: 12px;
+}

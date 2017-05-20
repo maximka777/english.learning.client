@@ -12,7 +12,7 @@
     </div>
   </div>
   <div *ngIf="selectedThemeId" class="row">
-    <button class="btn btn-primary btn-md" (click)="openTheoryModalForView()">Изучить теорию</button>
+    <button class="btn btn-primary btn-sm" (click)="openTheoryModalForView()">Изучить теорию</button>
     <h3>Тесты из выбранной темы</h3>
     <a *ngIf="selectedTestId" class="btn btn-danger btn-xs" routerLink="/test/{{selectedTestId}}">Пройти тест</a>
     <div *ngIf="tests && tests.length" class="col-md-12">
@@ -54,14 +54,11 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body">
-        <form>
-
-          <div class="form-group">
-            <textarea disabled class="form-control" rows="18" [(ngModel)]="currentTheory" name="description"></textarea>
-          </div>
-          <button type="button" class="btn btn-secondary"(click)="onTheoryFormClose()">Закрыть</button>
-        </form>
+      <div class="modal-body theory-modal">
+        <div class="theory-block">
+          <span class="theory-text">{{currentTheory}}</span>
+        </div>
+        <button type="button" class="btn btn-secondary"(click)="onTheoryFormClose()">Закрыть</button>
       </div>
     </div>
   </div>

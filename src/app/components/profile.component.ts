@@ -1,6 +1,10 @@
 import {Component, OnInit, ElementRef } from '@angular/core';
 import {AuthService} from '../services/auth.service';
 import { D3Service, D3, Selection } from 'd3-ng2-service';
+import {TestResultsService} from "../services/test-results.service";
+import * as _ from 'lodash';
+
+const moment = require('moment');
 
 @Component({
   moduleId: module.id,
@@ -9,12 +13,13 @@ import { D3Service, D3, Selection } from 'd3-ng2-service';
   styleUrls: ['./styles/profile.component.css']
 })
 export class ProfileComponent implements OnInit {
-
+  private results = [];
   private d3: D3;
   private parentNativeElement: any;
   private data: any;
 
   constructor(private authService: AuthService,
+              private testResultsService: TestResultsService,
               private element: ElementRef,
               private d3Service: D3Service
   ) {
@@ -26,7 +31,18 @@ export class ProfileComponent implements OnInit {
     if (!this.authService.isLogged()) {
       return this.authService.navigateToLogin();
     }
+    if (this.authService.isAdmin()) {
+      return this.authService.navigateToAdminRoot();
+    }
+    this.testResultsService.getAll(this.authService.user.id)
+      .then((res: any) => {
+        this.results = _.sortBy(res, r => -r.passDate);
+      });
     this.drawChart();
+  }
+
+  formatPassDate(result) {
+    return moment.unix(result.passDate).format('YYYY-DD-MM HH:mm');
   }
 
   drawChart() {
@@ -69,8 +85,8 @@ export class ProfileComponent implements OnInit {
         d.close = +d.close;
       });
 
-      x.domain(d3.extent(data, function(d: any) { return d.date; }));
-      y.domain([0, d3.max(data, function(d: any) { return d.close; })]);
+      // x.domain(d3.extent(data, function(d: any) { return d.date; }));
+      // y.domain([0, d3.max(data, function(d: any) { return d.close; })]);
 
       svg.append('path')
         .data([this.data])

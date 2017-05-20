@@ -3,3 +3,35 @@
   stroke: steelblue;
   stroke-width: 2px;
 }
+
+.result {
+  padding: 7px;
+  border: 1px solid #dcdcdc;
+  margin-bottom: 10px;
+}
+
+.test-name {
+  margin: 0 0 10px 0;
+}
+
+.test-name a {
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.result-bottom {
+  display: flex;
+  justify-content: space-between;
+}
+
+.number-result {
+  font-size: 12px;
+}
+
+.right-count {
+  margin-right: 10px;
+}
+
+.date {
+  font-size: 12px;
+}

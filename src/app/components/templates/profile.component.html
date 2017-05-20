@@ -1,8 +1,32 @@
 <div class="container">
   <div class="row">
     <div *ngIf="authService.user" class="col-md-10 col-md-offset-1">
-      <h1>Привет, {{authService.user.username}}</h1>
+      <h3>Привет, {{authService.user.username}}</h3>
       <p>На этой странице ты можешь посмотреть свой прогресс.</p>
+      <hr>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-10 col-md-offset-1">
+      <h3>Недавно пройденные тесты</h3>
+    </div>
+    <div *ngFor="let result of results" class="col-md-10 col-md-offset-1">
+      <div class="result">
+        <h4 class="test-name"><a routerLink="/test/{{result.test.id}}">{{result.test.name}}</a></h4>
+        <div class="result-bottom">
+          <div class="number-result">
+            <span class="right-count">Правильно: <span style="font-size: 15px">{{result.correctCount}}</span></span>
+            <span class="total-count">Всего: <span style="font-size: 15px">{{result.totalCount}}</span></span>
+          </div>
+          <span class="date">{{formatPassDate(result)}}</span>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="!results.length" class="col-md-10 col-md-offset-1">
+      <div class="alert alert-success" role="alert">
+        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+        Вы не прошли ни один тест.
+      </div>
     </div>
   </div>
 </div>

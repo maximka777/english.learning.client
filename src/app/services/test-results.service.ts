@@ -8,6 +8,10 @@ import {TestResult} from "../models/TestResult";
 export class TestResultsService {
   constructor(@Inject(APP_CONFIG) private config: any, private http: HttpClient) { }
 
+  getAll(userId) {
+    return this.http.get(`${this.config.API}/test-results/${userId}`, {});
+  }
+
   createOne(testResult: TestResult) {
     return this.http.post(`${this.config.API}/test-results`, testResult);
   }
