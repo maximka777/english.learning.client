@@ -18,7 +18,6 @@ export class AdminTestThemeComponent implements OnInit {
   theme: TestTheme;
   currentTest: Test;
   tests = [];
-  isEdit: Boolean;
   currentTheory: String;
 
   @ViewChild('theoryModal') public theoryModal: ModalDirective;
@@ -33,7 +32,6 @@ export class AdminTestThemeComponent implements OnInit {
     activatedRoute.params.subscribe((params: Params) => {
       this.themeId = params['themeId'];
       this.loadTheme();
-      this.isEdit = false;
     });
   }
 
@@ -75,7 +73,6 @@ export class AdminTestThemeComponent implements OnInit {
 
   openTheoryModalForAdd() {
     this.currentTheory = this.theme.theory || '';
-    this.isEdit = false;
     this.openTheoryModal();
   }
 
