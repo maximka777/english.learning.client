@@ -41,6 +41,10 @@ export class ProfileComponent implements OnInit {
     this.drawChart();
   }
 
+  isGoodResult(result) {
+    return result.correctCount / result.totalCount > 0.5;
+  }
+
   formatPassDate(result) {
     return moment.unix(result.passDate).format('YYYY-DD-MM HH:mm');
   }

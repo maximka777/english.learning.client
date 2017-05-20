@@ -7,6 +7,7 @@ import {TestsService} from "../services/tests.service";
 import {TestResultsService} from "../services/test-results.service";
 import {TestResult} from "../models/TestResult";
 import {AuthService} from "../services/auth.service";
+import {AlertService} from "../services/alert.service";
 
 @Component({
   moduleId: module.id,
@@ -34,6 +35,7 @@ export class TestComponent implements OnInit {
   constructor(private testsService: TestsService,
               private testResultsService: TestResultsService,
               private authService: AuthService,
+              private alertService: AlertService,
               private activatedRoute: ActivatedRoute,
               private router: Router) {
     activatedRoute.params.subscribe((params) => {
@@ -87,6 +89,9 @@ export class TestComponent implements OnInit {
     this.testResultsService.createOne(new TestResult(this.test.id, this.authService.user.id, this.result.rightCount, this.totalQuestionCount))
       .then(() => {
         console.log('test result is saved');
+      })
+      .catch(() => {
+        this.alertService.showErrorMessage('Ошибка при сохранении результата. Результат не будет сохранён.');
       });
     this.result.isActive = true;
   }

@@ -6,17 +6,28 @@
 
 .result {
   padding: 7px;
-  border: 1px solid #dcdcdc;
+  border: 1px solid #eee;
   margin-bottom: 10px;
 }
 
 .test-name {
-  margin: 0 0 10px 0;
+  margin: 0;
 }
 
 .test-name a {
   text-decoration: none;
   font-weight: bold;
+}
+
+.result-top {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.result-image {
+  width: 36px;
+  height: 36px;
 }
 
 .result-bottom {

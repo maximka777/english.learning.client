@@ -65,6 +65,9 @@ export class AdminWordThemeComponent implements OnInit {
         this.alertService.showSuccessMessage('Слово добавлено.');
         this.words.push(Object.assign({}, data));
         this.currentWord = new Word(this.themeId);
+      })
+      .catch(() => {
+        this.alertService.showErrorMessage('Ошибка при добавлении слова.');
       });
   }
 
@@ -77,6 +80,9 @@ export class AdminWordThemeComponent implements OnInit {
       .then(data => {
         this.words = this.words.filter(word => word.id !== wordId);
         this.alertService.showSuccessMessage('Слово удалено.');
+      })
+      .catch(() => {
+        this.alertService.showErrorMessage('Ошибка при удалении слова.');
       });
   }
 
@@ -85,6 +91,9 @@ export class AdminWordThemeComponent implements OnInit {
       .then(data => {
         this.router.navigate(['/admin/word-themes']);
         this.alertService.showSuccessMessage('Тема удалена.');
+      })
+      .catch(() => {
+        this.alertService.showErrorMessage('Ошибка при удалении темы.');
       });
   }
 

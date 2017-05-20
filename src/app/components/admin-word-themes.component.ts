@@ -25,6 +25,9 @@ export class AdminWordThemesComponent {
       .then(data => {
         this.themes.push(Object.assign({}, data));
         this.currentTheme = new WordTheme();
+      })
+      .catch(() => {
+        this.alertService.showErrorMessage('Ошибка при добавлении темы.');
       });
   }
 

@@ -55,6 +55,9 @@ export class AdminTestComponent implements OnInit {
       .then(() => {
         this.alertService.showSuccessMessage('Тест удалён.');
         this.back();
+      })
+      .catch(() => {
+        this.alertService.showErrorMessage('Ошибка при удлении теста.');
       });
   }
 
@@ -71,6 +74,9 @@ export class AdminTestComponent implements OnInit {
         this.alertService.showSuccessMessage('Вопрос добавлен.');
         this.toggleAddQuestionForm();
         this.resetValidationError();
+      })
+      .catch(() => {
+        this.alertService.showErrorMessage('Ошибка при добавлении вопроса.');
       });
   }
 
@@ -102,6 +108,9 @@ export class AdminTestComponent implements OnInit {
       .then(() => {
         this.alertService.showSuccessMessage('Вопрос удалён.');
         this.test.questions = this.test.questions.filter(q => q.id !== question.id);
+      })
+      .catch(() => {
+        this.alertService.showErrorMessage('Ошибка при удалении вопроса.');
       });
   }
 

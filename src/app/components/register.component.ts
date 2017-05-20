@@ -27,6 +27,9 @@ export class RegisterComponent implements OnInit {
       .then(() => {
         this.alertService.showSuccessMessage('Регистрация прошла успешно. Авторизуйтесь.');
         this.router.navigate(['/login']);
+      })
+      .catch(() => {
+        this.alertService.showErrorMessage('Регистрация завершилась ошибкой.');
       });
   }
 

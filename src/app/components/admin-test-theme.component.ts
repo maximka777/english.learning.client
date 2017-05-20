@@ -68,6 +68,9 @@ export class AdminTestThemeComponent implements OnInit {
       .then(data => {
         this.tests.push(Object.assign({}, data));
         this.currentTest = new Test(this.themeId);
+      })
+      .catch(() => {
+        this.alertService.showErrorMessage('Ошибка при добавлении теста.');
       });
   }
 
@@ -87,13 +90,11 @@ export class AdminTestThemeComponent implements OnInit {
   onTheoryFormSubmit() {
     this.testThemesService.updateTheory(this.themeId, this.currentTheory)
       .then(theme => {
-        this.alertService.showSuccessMessage('теория сохранена успешно');
+        this.alertService.showSuccessMessage('Теория сохранена успешно');
         this.restoreState(theme);
       })
-      .catch((err) => {
-        this.closeTheoryModal();
-        const error_message = JSON.parse(err._body).data;
-        this.alertService.showErrorMessage(error_message);
+      .catch(() => {
+        this.alertService.showErrorMessage('Ошибка при изменении теории.');
       });
   }
 
@@ -114,6 +115,9 @@ export class AdminTestThemeComponent implements OnInit {
     this.testsService.remove(testId)
       .then(data => {
         this.tests = this.tests.filter(test => test.id !== testId);
+      })
+      .catch(() => {
+        this.alertService.showErrorMessage('Ошибка при удалении теста.');
       });
   }
 
@@ -121,6 +125,9 @@ export class AdminTestThemeComponent implements OnInit {
     this.testThemesService.remove(this.themeId)
       .then(data => {
         this.router.navigate(['/admin/test-themes']);
+      })
+      .catch(() => {
+        this.alertService.showErrorMessage('Ошибка при удалении темы.');
       });
   }
 

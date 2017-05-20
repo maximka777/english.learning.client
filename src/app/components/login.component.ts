@@ -23,6 +23,9 @@ export class LoginComponent implements OnInit {
       .then(data => {
         this.alertService.showSuccessMessage('Авторизация прошла успешно.');
         this.router.navigate(['/']);
+      })
+      .catch(() => {
+        this.alertService.showErrorMessage('Авторизация завершилась ошибкой.');
       });
   }
 

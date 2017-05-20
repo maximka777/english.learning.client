@@ -12,7 +12,10 @@
     </div>
     <div *ngFor="let result of results" class="col-md-10 col-md-offset-1">
       <div class="result">
-        <h4 class="test-name"><a routerLink="/test/{{result.test.id}}">{{result.test.name}}</a></h4>
+        <div class="result-top">
+          <h4 class="test-name"><a routerLink="/test/{{result.test.id}}">{{result.test.name}}</a></h4>
+          <img class="result-image" src="{{isGoodResult(result) ? '../../../assets/like.png' : '../../../assets/dislike.png'}}">
+        </div>
         <div class="result-bottom">
           <div class="number-result">
             <span class="right-count">Правильно: <span style="font-size: 15px">{{result.correctCount}}</span></span>

@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {TestThemesService} from "../services/test-themes.service";
 import {TestTheme} from "../models/TestTheme";
+import {AlertService} from "../services/alert.service";
 
 @Component({
   selector: 'admin-test-themes',
@@ -11,7 +12,8 @@ export class AdminTestThemesComponent {
   themes = [];
   currentTheme = new TestTheme();
 
-  constructor(private testThemesService: TestThemesService) {
+  constructor(private testThemesService: TestThemesService,
+              private alertService: AlertService) {
     testThemesService.getAll()
       .then((themes: [any]) => {
         this.themes = themes;
@@ -25,6 +27,9 @@ export class AdminTestThemesComponent {
       .then(data => {
         this.themes.push(Object.assign({}, data));
         this.currentTheme = new TestTheme();
+      })
+      .catch(() => {
+        this.alertService.showErrorMessage('Ошибка при добавлении темы.');
       });
   }
 
@@ -32,6 +37,9 @@ export class AdminTestThemesComponent {
     this.testThemesService.remove(themeId)
       .then(data => {
         this.themes = this.themes.filter(t => t.id !== themeId);
+      })
+      .catch(() => {
+        this.alertService.showErrorMessage('Ошибка при удалении темы.');
       });
   }
 
