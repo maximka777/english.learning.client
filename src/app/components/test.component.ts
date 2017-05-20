@@ -32,6 +32,8 @@ export class TestComponent implements OnInit {
   message: string = '';
   isRight: boolean = false;
 
+  isSelectingBlocked = false;
+
   constructor(private testsService: TestsService,
               private testResultsService: TestResultsService,
               private authService: AuthService,
@@ -70,6 +72,8 @@ export class TestComponent implements OnInit {
   }
 
   selectAnswer(answer) {
+    if(this.isSelectingBlocked) return;
+    this.isSelectingBlocked = true;
     if(answer.isCorrect) {
       this.result.rightCount++;
       this.setMessage(true);
@@ -82,6 +86,7 @@ export class TestComponent implements OnInit {
       if(!this.currentQuestion) {
         this.handleEndOfTest();
       }
+      this.isSelectingBlocked = false;
     }, 500);
   }
 

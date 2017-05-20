@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {WordThemesService} from "../services/word-themes.service";
 import {WordTheme} from "../models/WordTheme";
+import {AlertService} from "../services/alert.service";
 
 @Component({
   selector: 'admin-word-themes',
@@ -11,7 +12,8 @@ export class AdminWordThemesComponent {
   themes = [];
   currentTheme = new WordTheme();
 
-  constructor(private wordThemesService: WordThemesService) {
+  constructor(private wordThemesService: WordThemesService,
+              private alertService: AlertService) {
     wordThemesService.getAll()
       .then((themes: [any]) => {
         this.themes = themes;
