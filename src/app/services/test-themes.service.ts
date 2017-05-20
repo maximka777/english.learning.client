@@ -25,7 +25,7 @@ export class TestThemesService {
     return this.http.delete(`${this.config.API}/test-topics/${themeId}`, {});
   }
 
-  updateTherory(themeId, theory) {
+  updateTheory(themeId, theory) {
     return this.http.put(`${this.config.API}/test-topics/${themeId}/theory`, { theory });
   }
 }

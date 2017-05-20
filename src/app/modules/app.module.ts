@@ -35,6 +35,7 @@ import {AlertMessageComponent} from "../components/alert-message.component";
 import {AlertService} from "../services/alert.service";
 import {ProfileComponent} from "../components/profile.component";
 import {ErrorMessageComponent} from "../components/error-message.component";
+import { D3Service } from 'd3-ng2-service';
 
 @NgModule({
   declarations: [
@@ -78,6 +79,7 @@ import {ErrorMessageComponent} from "../components/error-message.component";
     QuestionsService,
     TestResultsService,
     AlertService,
+    D3Service
   ],
   bootstrap: [AppComponent]
 })

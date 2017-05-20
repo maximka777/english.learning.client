@@ -85,7 +85,7 @@ export class AdminTestThemeComponent implements OnInit {
   }
 
   onTheoryFormSubmit() {
-    this.testThemesService.updateTherory(this.themeId, this.currentTheory)
+    this.testThemesService.updateTheory(this.themeId, this.currentTheory)
       .then(theme => {
         this.alertService.showSuccessMessage('теория сохранена успешно');
         this.restoreState(theme);
