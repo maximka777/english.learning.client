@@ -57,25 +57,22 @@ export class ProfileComponent implements OnInit {
       d3ParentElement = d3.select(this.parentNativeElement);
 
       this.data = [
-        {date: '1-May-12', close: '58.13'},
-        {date: '30-Apr-12', close: '53.98'},
-        {date: '27-Apr-12', close: '67.00'},
-        {date: '26-Apr-12', close: '89.70'},
-        {date: '25-Apr-12', close: '99.00'}
+        {date: 1495136999, correct: 5},
+        {date: 1495222982, correct: 6},
+        {date: 1495315800, correct: 8},
+        {date: 1495319900, correct: 4}
       ];
 
-      const margin = {top: 20, right: 20, bottom: 30, left: 50},
-        width = 960 - margin.left - margin.right,
-        height = 500 - margin.top - margin.bottom;
-
-      const parseTime = d3.timeParse('%d-%b-%y');
+      const margin = {top: 40, right: 20, bottom: 30, left: 130},
+        width = 600 - margin.left - margin.right,
+        height = 400 - margin.top - margin.bottom;
 
       const x = d3.scaleTime().range([0, width]);
-      const y = d3.scaleLinear().range([height, 0]);
+      const y = d3.scaleQuantile().range([height, 0]);
 
       const valueline = d3.line()
         .x(function(d: any) { return x(d.date); })
-        .y(function(d: any) { return y(d.close); });
+        .y(function(d: any) { return y(d.correct); });
 
       const svg = d3ParentElement.append('svg')
         .attr('width', width + margin.left + margin.right)
@@ -84,13 +81,15 @@ export class ProfileComponent implements OnInit {
         .attr('transform',
           'translate(' + margin.left + ',' + margin.top + ')');
 
-      this.data.forEach(function(d) {
-        d.date = parseTime(d.date);
-        d.close = +d.close;
-      });
+      const minDataNumber = d3.min(this.data, (c: any)  => +c.date);
+      const maxDataNumber = d3.max(this.data, (c: any) => +c.date);
+      const minData = new Date(new Date(0).setSeconds(minDataNumber));
+      const maxData = new Date(new Date(0).setSeconds(maxDataNumber));
+      x.domain([minData, maxData]);
 
-      // x.domain(d3.extent(data, function(d: any) { return d.date; }));
-      // y.domain([0, d3.max(data, function(d: any) { return d.close; })]);
+      const minCorrect = d3.min(this.data, (c: any) => +c.correct);
+      const maxCorrect = d3.max(this.data, (c: any) => +c.correct);
+      y.domain([minCorrect, maxCorrect]);
 
       svg.append('path')
         .data([this.data])
@@ -103,6 +102,67 @@ export class ProfileComponent implements OnInit {
 
       svg.append('g')
         .call(d3.axisLeft(y));
+
+      const infoSvg = d3ParentElement.append('svg')
+        .attr('width', width + margin.left + margin.right)
+        .attr('height', height + margin.top + margin.bottom)
+        .append('g')
+        .attr('transform',
+          'translate(' + margin.left + ',' + margin.top + ')');
+
+      infoSvg.append("text")
+        .attr("x", 0)
+        .attr("y", 0)
+        .attr("dy", ".35em")
+        .style('fill', 'darkBlue')
+        .text('Количество правильных ответов: ');
+
+      infoSvg.append("line")
+        .attr("x1", margin.left * 2 + 10)
+        .attr("y1", 0)
+        .attr("x2", margin.left * 2 + 40)
+        .attr("y2", 0)
+        .style("stroke", "green")
+        .style("stroke-width", 3);
+
+      infoSvg.append("text")
+        .attr("x", 0)
+        .attr("y", 30)
+        .attr("dy", ".35em")
+        .style('fill', 'darkBlue')
+        .text('Количество неправильных ответов: ');
+
+      infoSvg.append("line")
+        .attr("x1", margin.left * 2 + 10)
+        .attr("y1", 30)
+        .attr("x2", margin.left * 2 + 40)
+        .attr("y2", 30)
+        .style("stroke", "red")
+        .style("stroke-width", 3);
+
+      this.data.forEach( (d, i, arr) => {
+        console.log(arr);
+        if(i === 0) {
+          svg.append("circle")
+            .attr("cx", (d.date - minDataNumber) * ( width / (maxDataNumber - minDataNumber)))
+            .attr("cy", height - d.correct * (height / maxCorrect))
+            .attr("r", 5)
+            .style("fill", "green");
+        } else {
+          svg.append("line")
+            .attr("x1", (arr[i - 1].date - minDataNumber) * ( width / (maxDataNumber - minDataNumber)))
+            .attr("y1", height - arr[i - 1].correct * (height / maxCorrect))
+            .attr("x2", (d.date - minDataNumber) * ( width / (maxDataNumber - minDataNumber)))
+            .attr("y2", height - d.correct * (height / maxCorrect))
+            .style("stroke", "green")
+            .style("stroke-width", 3);
+          svg.append("circle")
+            .attr("cx", (d.date - minDataNumber) * ( width / (maxDataNumber - minDataNumber)))
+            .attr("cy", height - d.correct * (height / maxCorrect))
+            .attr("r", 5)
+            .style("fill", "green");
+        }
+      });
     }
   }
 }
