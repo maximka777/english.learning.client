@@ -81,7 +81,7 @@ export class ProfileComponent implements OnInit {
       x.domain([minData, maxData]);
 
       const minCorrect = d3.min(this.results, (c: any) => +c.correctCount);
-      const maxCorrect = d3.max(this.results, (c: any) => +c.correctCount);
+      const maxCorrect = d3.max(this.results, (c: any) => +c.totalCount);
       y.domain([minCorrect, maxCorrect]);
 
       svg.append('path')
@@ -140,6 +140,23 @@ export class ProfileComponent implements OnInit {
             .attr("cy", height - d.correctCount * (height / maxCorrect))
             .attr("r", 5)
             .style("fill", "green");
+          svg.append("text")
+            .attr("x", (+d.passDate - minDataNumber) * ( width / (maxDataNumber - minDataNumber)))
+            .attr("y", height - d.correctCount * (height / maxCorrect) - 10)
+            .attr("dy", ".35em")
+            .style('fill', 'darkBlue')
+            .text(d.correctCount.toString());
+          svg.append("circle")
+            .attr("cx", (+d.passDate - minDataNumber) * ( width / (maxDataNumber - minDataNumber)))
+            .attr("cy", height - (d.totalCount - d.correctCount) * (height / maxCorrect))
+            .attr("r", 5)
+            .style("fill", "red");
+          svg.append("text")
+            .attr("x", (+d.passDate - minDataNumber) * ( width / (maxDataNumber - minDataNumber)))
+            .attr("y", height - (d.totalCount - d.correctCount) * (height / maxCorrect) - 10)
+            .attr("dy", ".35em")
+            .style('fill', 'darkBlue')
+            .text((d.totalCount - d.correctCount).toString());
         } else {
           svg.append("line")
             .attr("x1", (+(arr[i - 1].passDate) - minDataNumber) * ( width / (maxDataNumber - minDataNumber)))
@@ -153,6 +170,30 @@ export class ProfileComponent implements OnInit {
             .attr("cy", height - d.correctCount * (height / maxCorrect))
             .attr("r", 5)
             .style("fill", "green");
+          svg.append("text")
+            .attr("x", (+d.passDate - minDataNumber) * ( width / (maxDataNumber - minDataNumber)))
+            .attr("y", height - d.correctCount * (height / maxCorrect) - 10)
+            .attr("dy", ".35em")
+            .style('fill', 'darkBlue')
+            .text(d.correctCount.toString());
+          svg.append("line")
+            .attr("x1", (+(arr[i - 1].passDate) - minDataNumber) * ( width / (maxDataNumber - minDataNumber)))
+            .attr("y1", height - (arr[i - 1].totalCount - arr[i - 1].correctCount) * (height / maxCorrect))
+            .attr("x2", (+d.passDate - minDataNumber) * ( width / (maxDataNumber - minDataNumber)))
+            .attr("y2", height - (d.totalCount - d.correctCount) * (height / maxCorrect))
+            .style("stroke", "red")
+            .style("stroke-width", 3);
+          svg.append("circle")
+            .attr("cx", (+d.passDate - minDataNumber) * ( width / (maxDataNumber - minDataNumber)))
+            .attr("cy", height - (d.totalCount - d.correctCount) * (height / maxCorrect))
+            .attr("r", 5)
+            .style("fill", "red");
+          svg.append("text")
+            .attr("x", (+d.passDate - minDataNumber) * ( width / (maxDataNumber - minDataNumber)))
+            .attr("y", height - (d.totalCount - d.correctCount) * (height / maxCorrect) - 10)
+            .attr("dy", ".35em")
+            .style('fill', 'darkBlue')
+            .text((d.totalCount - d.correctCount).toString());
         }
       });
     }
