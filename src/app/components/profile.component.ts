@@ -37,8 +37,8 @@ export class ProfileComponent implements OnInit {
     this.testResultsService.getAll(this.authService.user.id)
       .then((res: any) => {
         this.results = _.sortBy(res, r => -r.passDate);
+        this.drawChart();
       });
-    this.drawChart();
   }
 
   isGoodResult(result) {
@@ -56,13 +56,6 @@ export class ProfileComponent implements OnInit {
 
       d3ParentElement = d3.select(this.parentNativeElement);
 
-      this.data = [
-        {date: 1495136999, correct: 5},
-        {date: 1495222982, correct: 6},
-        {date: 1495315800, correct: 8},
-        {date: 1495319900, correct: 4}
-      ];
-
       const margin = {top: 40, right: 20, bottom: 30, left: 130},
         width = 600 - margin.left - margin.right,
         height = 400 - margin.top - margin.bottom;
@@ -71,8 +64,8 @@ export class ProfileComponent implements OnInit {
       const y = d3.scaleQuantile().range([height, 0]);
 
       const valueline = d3.line()
-        .x(function(d: any) { return x(d.date); })
-        .y(function(d: any) { return y(d.correct); });
+        .x(function(d: any) { return x( +d.passDate ); })
+        .y(function(d: any) { return y( d.correctCount); });
 
       const svg = d3ParentElement.append('svg')
         .attr('width', width + margin.left + margin.right)
@@ -81,18 +74,18 @@ export class ProfileComponent implements OnInit {
         .attr('transform',
           'translate(' + margin.left + ',' + margin.top + ')');
 
-      const minDataNumber = d3.min(this.data, (c: any)  => +c.date);
-      const maxDataNumber = d3.max(this.data, (c: any) => +c.date);
+      const minDataNumber = d3.min(this.results, (c: any)  => +c.passDate);
+      const maxDataNumber = d3.max(this.results, (c: any) => +c.passDate);
       const minData = new Date(new Date(0).setSeconds(minDataNumber));
       const maxData = new Date(new Date(0).setSeconds(maxDataNumber));
       x.domain([minData, maxData]);
 
-      const minCorrect = d3.min(this.data, (c: any) => +c.correct);
-      const maxCorrect = d3.max(this.data, (c: any) => +c.correct);
+      const minCorrect = d3.min(this.results, (c: any) => +c.correctCount);
+      const maxCorrect = d3.max(this.results, (c: any) => +c.correctCount);
       y.domain([minCorrect, maxCorrect]);
 
       svg.append('path')
-        .data([this.data])
+        .data([this.results])
         .attr('class', 'line')
         .attr('d', valueline);
 
@@ -140,25 +133,24 @@ export class ProfileComponent implements OnInit {
         .style("stroke", "red")
         .style("stroke-width", 3);
 
-      this.data.forEach( (d, i, arr) => {
-        console.log(arr);
+      this.results.forEach( (d, i, arr) => {
         if(i === 0) {
           svg.append("circle")
-            .attr("cx", (d.date - minDataNumber) * ( width / (maxDataNumber - minDataNumber)))
-            .attr("cy", height - d.correct * (height / maxCorrect))
+            .attr("cx", (+d.passDate - minDataNumber) * ( width / (maxDataNumber - minDataNumber)))
+            .attr("cy", height - d.correctCount * (height / maxCorrect))
             .attr("r", 5)
             .style("fill", "green");
         } else {
           svg.append("line")
-            .attr("x1", (arr[i - 1].date - minDataNumber) * ( width / (maxDataNumber - minDataNumber)))
-            .attr("y1", height - arr[i - 1].correct * (height / maxCorrect))
-            .attr("x2", (d.date - minDataNumber) * ( width / (maxDataNumber - minDataNumber)))
-            .attr("y2", height - d.correct * (height / maxCorrect))
+            .attr("x1", (+(arr[i - 1].passDate) - minDataNumber) * ( width / (maxDataNumber - minDataNumber)))
+            .attr("y1", height - arr[i - 1].correctCount * (height / maxCorrect))
+            .attr("x2", (+d.passDate - minDataNumber) * ( width / (maxDataNumber - minDataNumber)))
+            .attr("y2", height - d.correctCount * (height / maxCorrect))
             .style("stroke", "green")
             .style("stroke-width", 3);
           svg.append("circle")
-            .attr("cx", (d.date - minDataNumber) * ( width / (maxDataNumber - minDataNumber)))
-            .attr("cy", height - d.correct * (height / maxCorrect))
+            .attr("cx", (+d.passDate - minDataNumber) * ( width / (maxDataNumber - minDataNumber)))
+            .attr("cy", height - d.correctCount * (height / maxCorrect))
             .attr("r", 5)
             .style("fill", "green");
         }
